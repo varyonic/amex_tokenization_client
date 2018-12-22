@@ -4,16 +4,24 @@ RSpec.describe AmexTokenizationClient do
   end
 
   let(:host) { 'api.qa.americanexpress.com' }
+  let(:token_requester_id) { ENV.fetch('AETS_TOKEN_REQUESTER_ID')}
   let(:client_id) { ENV.fetch('AETS_CLIENT_ID') }
   let(:client_secret) { ENV.fetch('AETS_CLIENT_SECRET') }
+  let(:encryption_key_id) { ENV.fetch('AETS_ENC_KEY_ID') }
+  let(:encryption_key) { ENV.fetch('AETS_ENC_KEY') }
 
   subject do
     AmexTokenizationClient.new(
       host: host,
+      token_requester_id: token_requester_id,
       client_id: client_id,
-      client_secret: client_secret
+      client_secret: client_secret,
+      encryption_key_id: encryption_key_id,
+      encryption_key: encryption_key,
     )
   end
+
+  before { subject.logger = Logger.new(STDOUT) if ENV['AETS_LOG'] }
 
   context do
     # Copied from amex-api-java-client-core ApiAuthenticationTest.java
@@ -40,5 +48,20 @@ RSpec.describe AmexTokenizationClient do
         expect(authorization).to match(%Q{,bodyhash="#{bodyhash}"})
       end
     end
+  end
+
+  it 'provisions a token' do
+    token = subject.provisioning(
+      account_number: "371111111111111",
+      name: "first|middle|last",
+      expiry_month: 2,
+      expiry_year: 2020,
+      email: "emailId@github.com",
+      is_on_file: true
+    )
+    expect(token.keys).to include('token_ref_id')
+    expect(token.fetch('token_number')).to match(/\d{12,19}/)
+    expect(token.fetch('expiry_month').to_s).to match(/\d{1,2}/)
+    expect(token.fetch('expiry_year').to_s).to match(/20\d{1,2}/)
   end
 end

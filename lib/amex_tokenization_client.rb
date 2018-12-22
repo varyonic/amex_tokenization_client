@@ -1,14 +1,52 @@
 require 'base64'
+require 'json'
+require 'jwe'
+require 'logger'
 require 'openssl'
+require "amex_tokenization_client/provisioning_payload"
+require "amex_tokenization_client/request"
 require "amex_tokenization_client/version"
 
 class AmexTokenizationClient
   attr_reader :host
+  attr_reader :base_path
+  attr_reader :token_requester_id
   attr_reader :client_id, :client_secret
+  attr_reader :encryption_key_id, :encryption_key
+  attr_accessor :logger
 
-  def initialize(host:, client_id:, client_secret:)
+  def initialize(host:,
+                 token_requester_id:,
+                 client_id:, client_secret:,
+                 encryption_key_id:, encryption_key:,
+                 logger: Logger.new('/dev/null'))
     @host = host
+    @base_path = "/payments/digital/v2/tokens".freeze
+    @token_requester_id = token_requester_id
     @client_id, @client_secret = client_id, client_secret
+    @encryption_key_id, @encryption_key = encryption_key_id, Base64.decode64(encryption_key)
+    @logger = logger
+  end
+
+  # @return [Hash] token_ref_id and other values.
+  def provisioning(kargs)
+    response = JSON.parse send_authorized_request('POST', 'provisioning', provisioning_payload(kargs))
+    response.merge! JSON.parse jwe_decrypt response.delete('secure_token_data')
+    response
+  end
+
+  def provisioning_payload(kargs)
+    ProvisioningPayload.new(kargs).to_json(encryption_key_id, encryption_key)
+  end
+
+  def jwe_decrypt(data)
+    JWE.decrypt(data, encryption_key)
+  end
+
+  def send_authorized_request(method, route, payload = nil)
+    resource_path = "#{base_path}/#{route}"
+    authorization = hmac_authorization(method, resource_path, payload)
+    new_request(method, resource_path, authorization).send(payload)
   end
 
   # @param [String] method, e.g. 'POST'
@@ -22,6 +60,21 @@ class AmexTokenizationClient
   end
 
   def hmac_digest(s)
-    Base64.strict_encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::SHA256.new, client_secret, s))
+    Base64.strict_encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::SHA256.new, client_secret, s.to_s))
+  end
+
+  def new_request(method, resource_path, authorization)
+    Request.new(method, "https://#{host}/#{resource_path}", headers(authorization), logger: logger)
+  end
+
+  def headers(authorization)
+    Hash[
+      'Content-Type' => 'application/json',
+      'Content-Language' => 'en-US',
+      'x-amex-token-requester-id' => token_requester_id,
+      'x-amex-api-key' => client_id,
+      'x-amex-request-id' => SecureRandom.uuid,
+      'authorization' => authorization,
+    ]
   end
 end
