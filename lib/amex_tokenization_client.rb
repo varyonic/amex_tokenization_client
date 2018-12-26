@@ -35,6 +35,10 @@ class AmexTokenizationClient
     response
   end
 
+  def metadata(token_ref_id)
+    JSON.parse send_authorized_request('GET', "#{token_ref_id}/metadata")
+  end
+
   def provisioning_payload(kargs)
     ProvisioningPayload.new(kargs).to_json(encryption_key_id, encryption_key)
   end
