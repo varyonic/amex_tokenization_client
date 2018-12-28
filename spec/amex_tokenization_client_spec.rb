@@ -64,6 +64,9 @@ RSpec.describe AmexTokenizationClient do
     expect(token.fetch('expiry_month').to_s).to match(/\d{1,2}/)
     expect(token.fetch('expiry_year').to_s).to match(/20\d{1,2}/)
 
+    status = subject.status(token['token_ref_id'])
+    expect(status.keys).to include('token_status')
+
     metadata = subject.metadata(token['token_ref_id'])
     expect(metadata.keys).to include('token_metadata')
   end

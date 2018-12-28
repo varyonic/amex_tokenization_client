@@ -35,6 +35,10 @@ class AmexTokenizationClient
     response
   end
 
+  def status(token_ref_id)
+    JSON.parse send_authorized_request('GET', "#{token_ref_id}/status")
+  end
+
   def metadata(token_ref_id)
     JSON.parse send_authorized_request('GET', "#{token_ref_id}/metadata")
   end
