@@ -3,6 +3,7 @@ require 'json'
 require 'jwe'
 require 'logger'
 require 'openssl'
+require "amex_tokenization_client/notifications_payload"
 require "amex_tokenization_client/provisioning_payload"
 require "amex_tokenization_client/request"
 require "amex_tokenization_client/version"
@@ -35,6 +36,10 @@ class AmexTokenizationClient
     response
   end
 
+  def notifications(kargs)
+    send_authorized_request('POST', 'notifications', notifications_payload(kargs))
+  end
+
   def status(token_ref_id)
     JSON.parse send_authorized_request('GET', "#{token_ref_id}/status")
   end
@@ -45,6 +50,10 @@ class AmexTokenizationClient
 
   def provisioning_payload(kargs)
     ProvisioningPayload.new(kargs).to_json(encryption_key_id, encryption_key)
+  end
+
+  def notifications_payload(kargs)
+    NotificationsPayload.new(kargs).to_json(encryption_key_id, encryption_key)
   end
 
   def jwe_decrypt(data)

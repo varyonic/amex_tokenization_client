@@ -64,6 +64,8 @@ RSpec.describe AmexTokenizationClient do
     expect(token.fetch('expiry_month').to_s).to match(/\d{1,2}/)
     expect(token.fetch('expiry_year').to_s).to match(/20\d{1,2}/)
 
+    subject.notifications(token_ref_id: token['token_ref_id'], notification_type: :suspend)
+
     status = subject.status(token['token_ref_id'])
     expect(status.keys).to include('token_status')
 
