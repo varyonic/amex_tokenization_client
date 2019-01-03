@@ -1,5 +1,7 @@
 # AmexTokenizationClient
 
+[![Travis CI Status](https://secure.travis-ci.org/varyonic/amex-api-ruby-client.svg)](https://travis-ci.org/varyonic/amex-api-ruby-client)
+
 Unofficial Ruby wrapper for the American Express Tokenization Service (AETS).
 
 ## Installation
