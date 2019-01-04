@@ -1,15 +1,17 @@
 # AmexTokenizationClient
 
+[![Gem Version](https://badge.fury.io/rb/amex_tokenization_client.svg)](https://badge.fury.io/rb/amex_tokenization_client)
 [![Travis CI Status](https://secure.travis-ci.org/varyonic/amex-api-ruby-client.svg)](https://travis-ci.org/varyonic/amex-api-ruby-client)
 
 Unofficial Ruby wrapper for the American Express Tokenization Service (AETS).
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add to your application's Gemfile:
 
 ```ruby
 gem 'amex_tokenization_client'
+gem 'jwe', git: 'https://github.com/varyonic/ruby-jwe', branch: 'PR18' # A256KW fix
 ```
 
 And then execute:
