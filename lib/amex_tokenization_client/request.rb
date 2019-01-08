@@ -4,12 +4,14 @@ require 'net/http'
 class AmexTokenizationClient
   class Request
     attr_reader :uri, :request
+    attr_reader :headers
     attr_reader :logger
 
     def initialize(method, path, headers, logger:)
       @logger = logger
       @uri = URI(path)
       @request = Net::HTTP.const_get(method.capitalize).new(uri)
+      @headers = headers
       headers.each_pair { |k, v| request[k] = v }
     end
 
@@ -37,6 +39,7 @@ class AmexTokenizationClient
     # Log response and time taken.
     def log_request_response(data = nil)
       logger.info "[#{self.class.name}] request = #{request.method} #{uri}#{data ? '?' + data : ''}"
+      logger.info "[#{self.class.name}] request_id = #{headers['x-amex-request-id']}"
       response = nil
       tms = Benchmark.measure do
         response = yield
