@@ -11,7 +11,6 @@ Add to your application's Gemfile:
 
 ```ruby
 gem 'amex_tokenization_client'
-gem 'jwe', git: 'https://github.com/varyonic/ruby-jwe', branch: 'PR18' # A256KW fix
 ```
 
 And then execute:
