@@ -53,8 +53,11 @@ class AmexTokenizationClient
     end
 
     class UnexpectedHttpResponse < StandardError
+      attr_reader :response
+
       def initialize(response)
-        super response.message || response.code
+        @response = response
+        super "#{response.message} (#{response.code}): #{response.body}"
       end
     end
 
