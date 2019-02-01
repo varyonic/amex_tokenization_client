@@ -3,7 +3,9 @@
 [![Gem Version](https://badge.fury.io/rb/amex_tokenization_client.svg)](https://badge.fury.io/rb/amex_tokenization_client)
 [![Travis CI Status](https://secure.travis-ci.org/varyonic/amex-api-ruby-client.svg)](https://travis-ci.org/varyonic/amex-api-ruby-client)
 
-Unofficial Ruby wrapper for the American Express Tokenization Service (AETS).
+Unofficial Ruby wrapper for the American Express Tokenization Service (AETS)
+published via the [amex developer portal](https://developer.americanexpress.com/products/amex-token-service/overview),
+see also [amex-api-java-client-core](https://github.com/americanexpress/amex-api-java-client-core).
 
 ## Installation
 
@@ -19,18 +21,16 @@ And then execute:
 
 ## Usage
 
-TODO: Write usage instructions here
+See [specs](https://github.com/varyonic/amex-api-ruby-client/blob/master/spec/amex_tokenization_client_spec.rb) for sample usage.
 
-## Development
+## Contributions
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/varyonic/amex-api-ruby-client.
+Read [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+
+Read the [LICENSE](LICENSE.md) for details.
+
+Copyright (c) 2018-2019 [Varyonic](https://www.varyonic.com).
