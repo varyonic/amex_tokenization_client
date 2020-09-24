@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["piers@varyonic.com"]
 
   spec.summary       = "Unofficial Ruby wrapper for the American Express Tokenization Service (AETS)."
-  spec.homepage      = "https://github.com/varyonic/amex-api-ruby-client"
+  spec.homepage      = "https://github.com/varyonic/amex_enhanced_authorization"
   spec.license       = "MIT"
 
   # Specify which files should be added to the gem when it is released.

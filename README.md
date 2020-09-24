@@ -1,7 +1,7 @@
 # AmexTokenizationClient
 
 [![Gem Version](https://badge.fury.io/rb/amex_tokenization_client.svg)](https://badge.fury.io/rb/amex_tokenization_client)
-[![Travis CI Status](https://secure.travis-ci.org/varyonic/amex-api-ruby-client.svg)](https://travis-ci.org/varyonic/amex-api-ruby-client)
+[![Travis CI Status](https://secure.travis-ci.org/varyonic/amex_enhanced_authorization.svg)](https://travis-ci.org/varyonic/amex_enhanced_authorization)
 
 Unofficial Ruby wrapper for the American Express Tokenization Service (AETS)
 published via the [amex developer portal](https://developer.americanexpress.com/products/amex-token-service/overview),
@@ -21,7 +21,7 @@ And then execute:
 
 ## Usage
 
-See [specs](https://github.com/varyonic/amex-api-ruby-client/blob/master/spec/amex_tokenization_client_spec.rb) for sample usage.
+See [specs](https://github.com/varyonic/amex_enhanced_authorization/blob/master/spec/amex_tokenization_client_spec.rb) for sample usage.
 
 ## Contributions
 

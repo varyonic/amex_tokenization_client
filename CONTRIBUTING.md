@@ -1,6 +1,6 @@
 # Contributing
 
-Bug reports and pull requests are [welcome on GitHub](https://github.com/varyonic/amex-api-ruby-client).
+Bug reports and pull requests are [welcome on GitHub](https://github.com/varyonic/amex_enhanced_authorization).
 
 ## Development
 
