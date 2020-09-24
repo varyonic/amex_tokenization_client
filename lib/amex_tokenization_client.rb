@@ -88,6 +88,7 @@ class AmexTokenizationClient
     Hash[
       'Content-Type' => 'application/json',
       'Content-Language' => 'en-US',
+      'Accept-Language' => 'en',
       'x-amex-token-requester-id' => token_requester_id,
       'x-amex-api-key' => client_id,
       'x-amex-request-id' => SecureRandom.uuid,
