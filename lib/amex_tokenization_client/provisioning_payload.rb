@@ -4,16 +4,18 @@ class AmexTokenizationClient
   class ProvisioningPayload
     attr_reader :account_number, :expiry_month, :expiry_year
     attr_reader :name, :email, :is_on_file, :ip_address
+    attr_reader :user_id
 
-    def initialize(account_number:, name:, expiry_month:, expiry_year:, email:, is_on_file:, ip_address: nil)
+    def initialize(account_number:, name:, expiry_month:, expiry_year:, email:, is_on_file:, user_id: nil, ip_address: nil)
       @account_number, @expiry_month, @expiry_year = account_number, expiry_month, expiry_year
       @name, @email, @is_on_file, @ip_address = name, email, is_on_file, ip_address
+      @user_id = user_id
     end
 
     def to_json(encryption_key_id, encryption_key)
       Hash[
         account_data: account_data(encryption_key_id, encryption_key),
-        user_data: { name: name, email: email },
+        user_data: { user_id: user_id, name: name, email: email }.compact,
         risk_assessment_data: risk_assessment_data
       ].to_json
     end
