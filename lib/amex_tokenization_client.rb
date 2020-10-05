@@ -8,6 +8,7 @@ require "amex_tokenization_client/provisioning_payload"
 require "amex_tokenization_client/request"
 require "amex_tokenization_client/version"
 
+# https://developer.americanexpress.com/products/amex-token-service/resources
 class AmexTokenizationClient
   attr_reader :host
   attr_reader :base_path
@@ -32,6 +33,13 @@ class AmexTokenizationClient
   # @return [Hash] token_ref_id and other values.
   def provisioning(kargs)
     response = JSON.parse send_authorized_request('POST', 'provisioning', provisioning_payload(kargs))
+    response.merge! JSON.parse jwe_decrypt response.delete('secure_token_data')
+    response
+  end
+
+  # @return [Hash] token_ref_id and other values.
+  def provisionings(kargs)
+    response = JSON.parse send_authorized_request('POST', 'provisionings', provisioning_payload(kargs))
     response.merge! JSON.parse jwe_decrypt response.delete('secure_token_data')
     response
   end

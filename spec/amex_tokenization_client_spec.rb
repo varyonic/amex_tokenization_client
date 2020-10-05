@@ -19,6 +19,17 @@ RSpec.describe AmexTokenizationClient do
       is_on_file: true
     }
   end
+  let(:account_params2) do
+    {
+      account_number: "371111111111114",
+      name: "first|middle|last",
+      expiry_month: 12,
+      expiry_year: 2030,
+      email: "emailId@github.com",
+      is_on_file: false,
+      user_id: '11111111' # sandbox user_id for 371111111111114
+    }
+  end
 
   subject do
     AmexTokenizationClient.new(
@@ -60,20 +71,36 @@ RSpec.describe AmexTokenizationClient do
     end
   end
 
-  it 'provisions a token' do
+  it 'provision a token' do
     token = subject.provisioning(account_params)
     expect(token.keys).to include('token_ref_id')
     expect(token.fetch('token_number')).to match(/\d{12,19}/)
     expect(token.fetch('expiry_month').to_s).to match(/\d{1,2}/)
     expect(token.fetch('expiry_year').to_s).to match(/20\d{1,2}/)
 
-    subject.notifications(token_ref_id: token['token_ref_id'], notification_type: :suspend)
+    # subject.notifications(token_ref_id: token.fetch('token_ref_id'), notification_type: :suspend)
 
     status = subject.status(token['token_ref_id'])
     expect(status.keys).to include('token_status')
 
     metadata = subject.metadata(token['token_ref_id'])
     expect(metadata.keys).to include('token_metadata')
+  end
+
+  it 'provisions a token' do
+    token = subject.provisionings(account_params2)
+    expect(token.keys).to include('token_ref_id')
+    expect(token.fetch('token_number')).to match(/\d{12,19}/)
+    expect(token.fetch('expiry_month').to_s).to match(/\d{1,2}/)
+    expect(token.fetch('expiry_year').to_s).to match(/20\d{1,2}/)
+
+    status = subject.status(token['token_ref_id'])
+    expect(status.keys).to include('token_status')
+
+    metadata = subject.metadata(token['token_ref_id'])
+    expect(metadata.keys).to include('token_metadata')
+
+    # subject.notifications(token_ref_id: token.fetch('token_ref_id'), notification_type: :suspend)
   end
 
   it 'returns error details' do
