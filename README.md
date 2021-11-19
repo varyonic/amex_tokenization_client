@@ -1,7 +1,7 @@
 # AmexTokenizationClient
 
 [![Gem Version](https://badge.fury.io/rb/amex_tokenization_client.svg)](https://badge.fury.io/rb/amex_tokenization_client)
-[![Travis CI Status](https://secure.travis-ci.org/varyonic/amex_enhanced_authorization.svg)](https://travis-ci.org/varyonic/amex_enhanced_authorization)
+[![Github Actions  ][actions_badge]][actions]
 
 Unofficial Ruby wrapper for the American Express Tokenization Service (AETS)
 published via the [amex developer portal](https://developer.americanexpress.com/products/amex-token-service/overview),
@@ -33,4 +33,7 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 Read the [LICENSE](LICENSE.md) for details.
 
-Copyright (c) 2018-2019 [Varyonic](https://www.varyonic.com).
+Copyright (c) 2018-2021 [Varyonic](https://www.varyonic.com).
+
+[actions_badge]: https://github.com/varyonic/amex_tokenization_client/workflows/ci/badge.svg
+[actions]: https://github.com/varyonic/amex_tokenization_client/actions
