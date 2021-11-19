@@ -57,11 +57,11 @@ class AmexTokenizationClient
   end
 
   def provisioning_payload(kargs)
-    ProvisioningPayload.new(kargs).to_json(encryption_key_id, encryption_key)
+    ProvisioningPayload.new(**kargs).to_json(encryption_key_id, encryption_key)
   end
 
   def notifications_payload(kargs)
-    NotificationsPayload.new(kargs).to_json(encryption_key_id, encryption_key)
+    NotificationsPayload.new(**kargs).to_json(encryption_key_id, encryption_key)
   end
 
   def jwe_decrypt(data)
